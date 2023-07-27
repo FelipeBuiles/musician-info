@@ -16,7 +16,7 @@ export default function Nav() {
       </Button>
       <Separator orientation="vertical" />
       <Button variant="link" asChild>
-        <Link href="/socials">Socials</Link>
+        <Link href="/fanclub">Fan Club</Link>
       </Button>
       <Separator orientation="vertical" />
       <Button variant="link" asChild>
