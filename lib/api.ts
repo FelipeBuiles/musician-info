@@ -7,11 +7,7 @@ export type ArtistInfo = {
     total: number;
   };
   genres: string[];
-  images: {
-    url: string;
-    height: number;
-    width: number;
-  }[];
+  images: Image[];
   name: string;
   popularity: number;
 };
@@ -19,6 +15,27 @@ export type ArtistInfo = {
 export type Track = {
   id: string;
   name: string;
+  album: Album;
+  duration_ms: number;
+  explicit: boolean;
+  href: string;
+  preview_url: string;
+  track_number: number;
+};
+
+export type Album = {
+  id: string;
+  name: string;
+  release_date: string;
+  total_tracks: number;
+  images: Image[];
+  href: string;
+};
+
+type Image = {
+  url: string;
+  height: number;
+  width: number;
 };
 
 async function fetchAndRetry(url: string) {
@@ -35,16 +52,13 @@ async function fetchAndRetry(url: string) {
 }
 
 export async function getArtistInfo(id: string): Promise<ArtistInfo> {
-  // try {
-  //   const res = await axios.get(`${SPOTIFY_API_URL}/artists/${id}`);
-
-  //   if (!res.status) {
-  //     throw new Error("Failed to fetch artist");
-  //   }
-  //   return res.data;
-  // } catch (error) {
-  //   await getAccessCode();
-  //   return getArtistInfo(id);
-  // }
   return fetchAndRetry(`${SPOTIFY_API_URL}/artists/${id}`);
+}
+
+export async function getTopTracks(
+  artistId: string,
+): Promise<{ tracks: Track[] }> {
+  return fetchAndRetry(
+    `${SPOTIFY_API_URL}/artists/${artistId}/top-tracks?market=co`,
+  );
 }

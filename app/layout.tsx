@@ -9,6 +9,7 @@ import FacebookLogo from "@/public/facebook.svg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import Hero from "@/components/hero";
 
 const golos = Golos_Text({ subsets: ["latin"] });
 
@@ -26,7 +27,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={golos.className}>
-      <body className="dark bg-cover">{children}</body>
+      <body className="dark bg-cover">
+        <Hero />
+        {children}
+      </body>
       <footer className="dark flex flex-col-reverse content-center items-center justify-between p-4 align-middle md:flex-row">
         <span>© Juan Builes 2023</span>
         <div>
