@@ -1,4 +1,6 @@
-import axiosInstance from "./axios";
+import axios from "axios";
+import { SPOTIFY_API_URL } from "./constants";
+import { getAccessCode } from "./axios";
 
 export type ArtistInfo = {
   followers: {
@@ -11,6 +13,7 @@ export type ArtistInfo = {
     width: number;
   }[];
   name: string;
+  popularity: number;
 };
 
 export type Track = {
@@ -18,11 +21,30 @@ export type Track = {
   name: string;
 };
 
-export async function getArtistInfo(id: string): Promise<ArtistInfo> {
-  const res = await axiosInstance.get(`/artists/${id}`);
-
-  if (!res.status) {
-    throw new Error("Failed to fetch artist");
+async function fetchAndRetry(url: string) {
+  try {
+    const res = await axios.get(url);
+    if (!res.status) {
+      throw new Error("Failed to fetch artist");
+    }
+    return res.data;
+  } catch (error) {
+    await getAccessCode();
+    return fetchAndRetry(url);
   }
-  return res.data;
+}
+
+export async function getArtistInfo(id: string): Promise<ArtistInfo> {
+  // try {
+  //   const res = await axios.get(`${SPOTIFY_API_URL}/artists/${id}`);
+
+  //   if (!res.status) {
+  //     throw new Error("Failed to fetch artist");
+  //   }
+  //   return res.data;
+  // } catch (error) {
+  //   await getAccessCode();
+  //   return getArtistInfo(id);
+  // }
+  return fetchAndRetry(`${SPOTIFY_API_URL}/artists/${id}`);
 }
