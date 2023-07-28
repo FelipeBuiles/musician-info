@@ -20,7 +20,12 @@ export default function Nav() {
       </Button>
       <Separator orientation="vertical" />
       <Button variant="link" asChild>
-        <Link href="/merch">Merch</Link>
+        <Link
+          target="_blank"
+          href="https://tool-storefront-hvw6jno1u-felipebuiles.vercel.app/search/featured-products"
+        >
+          Merch
+        </Link>
       </Button>
     </nav>
   );

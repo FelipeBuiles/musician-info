@@ -22,13 +22,17 @@ export default async function Home() {
             <CardHeader>
               <h2 className="text-2xl">Followers</h2>
             </CardHeader>
-            <CardContent>{followers.total}</CardContent>
+            <CardContent>
+              <div className="text-xl font-bold">{`# ${followers.total}`}</div>
+            </CardContent>
           </Card>
           <Card className="m-4">
             <CardHeader>
               <h2 className="text-2xl">Popularity</h2>
             </CardHeader>
-            <CardContent>{`# ${popularity}`}</CardContent>
+            <CardContent>
+              <div className="text-3xl font-bold">{`# ${popularity}`}</div>
+            </CardContent>
           </Card>
           <Card className="m-4">
             <CardHeader>
